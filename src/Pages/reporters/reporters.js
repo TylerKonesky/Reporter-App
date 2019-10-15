@@ -15,6 +15,7 @@ export default class Reporters extends Component{
         return(
             <div>
                 This is the Reporters Page!
+                Random Thing!
             </div>
         )
     }
