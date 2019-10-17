@@ -1,7 +1,7 @@
 .report-detail {
   color: black;
-  display: grid;
-  grid-template-columns: 1fr 4fr;
+  display: flex;
+  flex-direction: row;
 }
 
 .navbar {
@@ -49,11 +49,12 @@
 }
 
 .content-wraper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-self: center;
+  align-content: stretch;
+  margin: 20px 50px;
 }
 
 .opening-text {
@@ -92,9 +93,9 @@
   justify-content: center;
 }
 
-.back-button {
-  background-color: #709ed1;
-  color: #30649e;
+.scroll-btn {
+  background-color: #fafafa;
+  fill: #709ed1;
   margin: 25px;
 }
 
@@ -106,7 +107,7 @@
   border: none;
 }
 
-.back-button:hover {
+.scroll-btn:hover {
   background-color: #30649e;
 }
 
@@ -117,12 +118,20 @@
 }
 
 .social-media-links {
+  color: #30649e;
   display: flex;
   justify-content: space-between;
-  height: 45px;
 }
 
-.social-media-links i {
+.icon {
+  cursor: pointer;
+  margin: 0px;
+}
+
+.social-media-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
   height: 45px;
 }
 
@@ -131,19 +140,31 @@
 }
 
 @media (max-width: 600px) {
-  .navbar {
-    width: 100%;
+  .report-detail {
+    display: flex;
+    flex-direction: row;
   }
+
+  .toggle {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    position: absolute;
+  }
+
+  .sidenav {
+    display: block;
+  }
+
   .navbar img {
-    width: 90%;
-  }
-  .links-wrapper {
-    visibility: hidden;
+    width: 75%;
   }
 
   .content-wraper {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    align-content: center;
   }
 
   .article-img {
@@ -156,6 +177,17 @@
 
   .content {
     order: 3;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
+
+  .opening-text {
+    order: 1;
+  }
+
+  .picture-n-text-wrapper {
+    order: 2;
   }
 
   .pic-n-text {
@@ -174,15 +206,14 @@
     order: 2;
     height: 200px;
     margin-top: 10px;
+    width: 200px;
+  }
+
+  .scroll-btn {
+    order: 3;
   }
 
   .footer {
-    order: 5;
-  }
-}
-
-@media (max-width: 601px) {
-  .toggle {
-    visibility: hidden;
+    order: 4;
   }
 }
