@@ -1,0 +1,36 @@
+.reporter-form-wrapper {
+    /* @include base-grid(); */
+    display: grid;
+    grid-gap: 21px;
+    grid-template-columns: 1fr;
+    padding: 42px;
+    justify-items: center;
+    
+  
+    /* @include input-element(); */
+    
+}
+.reporter-form-wrapper input {
+    margin-bottom: 0px;
+    font-family: "Titillium Web", sans-serif;
+    color: #42454a;
+    padding: 5px 0px;
+    width: 100%;
+    border-top: 0px;
+    border-right: 0px;
+    border-left: 0px;
+    border-bottom: 2px solid #709ED1;
+    background-color: transparent;
+    transition: 0.5s all ease-in-out;
+    font-size: 1.1em;
+    margin-bottom: 21px;
+}
+
+.reporter-form-wrapper button{
+    background-color: white;
+    border: none;
+    border-radius: 3px;
+    height: 20px;
+    width: 50px;
+    align-self: center;
+}
