@@ -8,16 +8,26 @@ import "./reporter-detail.css";
 import transparentLogo from "../../img/Reported_Logo_transparent.png";
 import blancImg from "../../img/img_square.png";
 import { tsPropertySignature } from "@babel/types";
+import Axios from "axios";
 
 export default class ReportersDetail extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      navside: false
+      navside: false,
+      userArticles: []
     };
 
     this.toggleNavSide = this.toggleNavSide.bind(this);
+  }
+
+  componentDidMount(){
+    console.log(this.props.match.params.id)
+    Axios.get(`https://desolate-bastion-18101.herokuapp.com/getArticle/${this.props.match.params.id}`).then(response=>{
+      console.log(response.data)
+      this.setState({userArticles: response.data})
+    })
   }
 
   toggleNavSide() {
@@ -58,8 +68,9 @@ export default class ReportersDetail extends Component {
           </div>
 
           <div className="title">
-            <h1>Header</h1>
-            <h4>Subheader</h4>
+            <h1>{this.state.userArticles.Heading}</h1>
+            <h4>{this.state.userArticles.Subheading}</h4>
+            <h5>{this.state.userArticles.Body}</h5>
           </div>
 
           <div className="content">
