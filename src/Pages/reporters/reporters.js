@@ -131,7 +131,7 @@ export default class Reporters extends Component{
                         <div className="reporter-description">{reporter.Description}</div>
                     </div>
                     <div className="link-button">   
-                        <Link  to={`/reporter/${reporter.id}`}>View Profile</Link>
+                        <Link  to={`/reporter/${reporter.ID}`}>View Profile</Link>
                         {Cookie.get("USERNAME") && Cookie.get("PASSWORD") ? 
                         <button onClick={this.handleDelete} id={reporter.ID}>x</button>:
                         null
