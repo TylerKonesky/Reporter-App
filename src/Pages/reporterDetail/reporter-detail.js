@@ -1,13 +1,12 @@
 import React, { Component } from "react";
-import { FaBars, FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-// import { SideNav, Nav, NavContext } from "react-sidenav";
+import { FaBars, FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
+import { LoremIpsum } from "react-lorem-ipsum";
 import ScrollUpButton from "react-scroll-up-button";
 
 import "./reporter-detail.css";
 import transparentLogo from "../../img/Reported_Logo_transparent.png";
-import blancImg from "../../img/img_square.png";
-import { tsPropertySignature } from "@babel/types";
 import Axios from "axios";
 
 export default class ReportersDetail extends Component {
@@ -22,12 +21,14 @@ export default class ReportersDetail extends Component {
     this.toggleNavSide = this.toggleNavSide.bind(this);
   }
 
-  componentDidMount(){
-    console.log(this.props.match.params.id)
-    Axios.get(`https://desolate-bastion-18101.herokuapp.com/getArticle/${this.props.match.params.id}`).then(response=>{
-      console.log(response.data)
-      this.setState({userArticles: response.data})
-    })
+  componentDidMount() {
+    console.log(this.props.match.params.id);
+    Axios.get(
+      `https://desolate-bastion-18101.herokuapp.com/getArticle/${this.props.match.params.id}`
+    ).then(response => {
+      console.log(response.data);
+      this.setState({ userArticles: response.data });
+    });
   }
 
   toggleNavSide() {
@@ -51,61 +52,93 @@ export default class ReportersDetail extends Component {
               </div>
 
               <div className="links-wrapper">
-                <button className="btn">button</button>
-                <button className="btn">button</button>
-                <button className="btn">button</button>
-                <button className="btn">button</button>
-                <button className="btn">button</button>
-                <button className="btn">button</button>
+                <Link to={"/"} className="btn">
+                  Link 1
+                </Link>
+                <Link to={"/"} className="btn">
+                  Link 2
+                </Link>
+                <Link to={"/"} className="btn">
+                  Link 3
+                </Link>
+                <Link to={"/"} className="btn">
+                  Link 4
+                </Link>
               </div>
             </div>
           </div>
         ) : null}
 
+        <div className="navbardefault">
+          <div className="navbar-up">
+            <div className="logo-img">
+              <img src={transparentLogo} />
+            </div>
+
+            <div className="links-wrapper">
+              <Link to={"/"} className="btn">
+                Link 1
+              </Link>
+              <Link to={"/"} className="btn">
+                Link 2
+              </Link>
+              <Link to={"/"} className="btn">
+                Link 3
+              </Link>
+              <Link to={"/"} className="btn">
+                Link 4
+              </Link>
+            </div>
+          </div>
+        </div>
+
         <div className="content-wraper">
           <div className="article-img">
-            <img src={blancImg} />
+            <img src="https://source.unsplash.com/random" />
           </div>
 
           <div className="title">
             <h1>{this.state.userArticles.Heading}</h1>
             <h4>{this.state.userArticles.Subheading}</h4>
-            <h5>{this.state.userArticles.Body}</h5>
           </div>
 
           <div className="content">
-            <p className="opening-text">opening text</p>
+            <p className="opening-text">{this.state.userArticles.Body}</p>
 
             <div className="picture-n-text-wrapper">
               <div className="pic-n-text">
-                <img src={blancImg} />
-                <p>text</p>
+                <img
+                  src="https://source.unsplash.com/random"
+                  className="picture"
+                />
+
+                <LoremIpsum p={1} className="text" />
               </div>
 
               <div className="pic-n-text">
-                <p>Text</p>
-                <img src={blancImg} />
-              </div>
-            </div>
+                <LoremIpsum p={1} className="text" />
 
-            <div className="scroll-btn">
-              <ScrollUpButton />
+                <img
+                  src="https://source.unsplash.com/random"
+                  className="picture"
+                />
+              </div>
             </div>
           </div>
+
           <div className="footer">
             <div className="social-media-links">
-              <div className="icon">
-                <FaFacebookF />
-              </div>
-              <div className="icon">
-                <FaTwitter />
-              </div>
-              <div className="icon">
-                <FaInstagram />
-              </div>
+              <FaFacebookF />
+
+              <FaTwitter />
+
+              <FaInstagram />
             </div>
             <div className="copyright">
               <p>copyright</p>
+            </div>
+            <div className="scroll-btn">
+              <ScrollUpButton />
             </div>
           </div>
         </div>
