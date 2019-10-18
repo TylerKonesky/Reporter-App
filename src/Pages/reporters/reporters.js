@@ -4,6 +4,7 @@ import axios from "axios";
 import "./reporters.css"
 import Logo from "../../images/logo.jpeg"
 import ReporterModal from "./new-reporter-modal"
+import Cookie from "js-cookie"
 
 
 export default class Reporters extends Component{
@@ -73,12 +74,19 @@ export default class Reporters extends Component{
                 //     description: "Likes long ted talks!"
                 // },
             ], 
-            blogModalIsOpen: false
+            blogModalIsOpen: false,
+            username: '',
+            password: '', 
+            loggedIn: false
         }
         this.renderReporters = this.renderReporters.bind(this)
         this.handleModalClose = this.handleModalClose.bind(this)
         this.handleNewReporterClick = this.handleNewReporterClick.bind(this)
         this.handleDelete = this.handleDelete.bind(this)
+        this.handleLogin = this.handleLogin.bind(this)
+        this.handleUsername = this.handleUsername.bind(this)
+        this.handlePassword = this.handlePassword.bind(this)
+        this.handleLogout = this.handleLogout.bind(this)
     }
 
     componentDidMount(){
@@ -88,6 +96,29 @@ export default class Reporters extends Component{
             })
             console.log(this.state.reporters)
         })
+    }
+
+    handleLogin(event){
+        event.preventDefault();
+        Cookie.set("USERNAME", this.state.username, {expires: 3})
+        Cookie.set("PASSWORD", this.state.password, {expires: 3})
+        this.setState({
+            loggedIn: true
+        })
+    }
+
+    handleUsername(event){
+        this.setState({
+            username: event.target.value
+        })
+        console.log(this.state.username)
+    }
+
+    handlePassword(event){
+        this.setState({
+            password: event.target.value
+        })
+        console.log(this.state.password)
     }
 
     renderReporters(){
@@ -101,7 +132,11 @@ export default class Reporters extends Component{
                     </div>
                     <div className="link-button">   
                         <Link  to={`/reporter/${reporter.id}`}>View Profile</Link>
-                        <button onClick={this.handleDelete} id={reporter.ID}>x</button>
+                        {Cookie.get("USERNAME") && Cookie.get("PASSWORD") ? 
+                        <button onClick={this.handleDelete} id={reporter.ID}>x</button>:
+                        null
+                    }
+                        
                     </div> 
                 </div>
                 
@@ -113,6 +148,7 @@ export default class Reporters extends Component{
         this.setState({
           blogModalIsOpen: false
         });
+        
       }
     handleNewReporterClick(){
         this.setState({
@@ -128,6 +164,15 @@ export default class Reporters extends Component{
         
     }
 
+    handleLogout(){
+        Cookie.remove("USERNAME")
+        Cookie.remove("PASSWORD")
+        this.setState({
+            username: '',
+            password: ''
+        })
+    }
+
 
     render(){
         return(
@@ -136,25 +181,44 @@ export default class Reporters extends Component{
                     <div className="navbar-logo">
                         <img src={Logo}></img>
                     </div>
-                    <div className="navbar-links">
-                        <div className="link-wrapper">
+                    
+                        { Cookie.get("USERNAME") && Cookie.get("PASSWORD") ?
+                        <div className="navbar-links">
+                            <div className="link-wrapper">
                             <a href="/">Link 1</a>
-                        </div>
-                        <div className="link-wrapper">
-                        <a href="/">Link 2</a>
                             </div>
-                        <div className="link-wrapper">
+                            <div className="link-wrapper">
+                            <a href="/">Link 2</a>
+                            </div>
+                            <div className="link-wrapper">
                             <a href="/">Link 3</a> 
+                            </div>
+                            <div className="link-wrapper">
+                            <a onClick={this.handleNewReporterClick}>Add Reporter</a>
+                            </div>
                         </div>
-                        <div className="link-wrapper">
-                        <a onClick={this.handleNewReporterClick}>Add Reporter</a>
+                        :
+                           null 
+
+                        }
+                        
+                    <div className="navbar-username">{
+                        Cookie.get("USERNAME") && Cookie.get("PASSWORD") ?
+                        <div>
+                            {Cookie.get("USERNAME")}
+                            <button className="log-button" onClick={()=>{this.handleLogout()}}>Logout</button>
                         </div>
+
+                         :
                         
-                        
-                        
+                        <div> 
+                            <input onChange={(event)=>{this.handleUsername(event)}} type="text" placeholder="Username"></input>
+                            <input onChange={(event)=>{this.handlePassword(event)}} type="password" placeholder="Password"></input>
+                            <button className="log-button" onClick={(event)=>{this.handleLogin(event)}}>Login</button>
+                        </div>
+                    }
                         
                     </div>
-                    <div className="navbar-username">Username</div>
                 </div>
                 <div className="main-reporters-wrapper">
                     <ReporterModal

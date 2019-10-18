@@ -34,6 +34,11 @@
     align-self: center;
 }
 
+.link-wrapper:hover{
+    cursor: pointer;
+    font-weight: bold;
+}
+
 .navbar-username{
     margin: 10px 50px 10px 10px;
     align-self: center;
@@ -123,6 +128,8 @@
     align-self: center;;
 }
 
+
+
 .link-button a{
     text-decoration: none;
     color: black;
@@ -132,6 +139,17 @@
     background-color: #9CBFE6;
     font-size: 14px;
     font-weight: bold;
+}
+
+.log-button{
+    text-decoration: none;
+    color: black;
+    border: 1px solid black;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #9CBFE6;
+    font-size: 14px;
+    
 }
 
 .link-button a:hover{
