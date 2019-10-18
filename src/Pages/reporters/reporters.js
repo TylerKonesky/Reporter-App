@@ -12,72 +12,82 @@ export default class Reporters extends Component{
 
         this.state = {
             reporters: [
-                {
-                    id: 1,
-                    picture: "https://images.app.goo.gl/Wmdb1r6xjBL85jf27",
-                    name: "Tina",
-                    description: "Likes long ted talks! In fact, so long that you cant even"
-                },
-                {
-                    id: 2,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
-                {   
-                    id: 3,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
-                {
-                    id: 4,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
-                {
-                    id: 5,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
-                {
-                    id: 6,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
-                {
-                    id: 7,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
-                {
-                    id: 8,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
-                {
-                    id: 9,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
-                {
-                    id: 10,
-                    picture: "picture url",
-                    name: "Tina",
-                    description: "Likes long ted talks!"
-                },
+                // {
+                //     id: 1,
+                //     picture: "https://images.app.goo.gl/Wmdb1r6xjBL85jf27",
+                //     name: "Tina",
+                //     description: "Likes long ted talks! In fact, so long that you cant even"
+                // },
+                // {
+                //     id: 2,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
+                // {   
+                //     id: 3,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
+                // {
+                //     id: 4,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
+                // {
+                //     id: 5,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
+                // {
+                //     id: 6,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
+                // {
+                //     id: 7,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
+                // {
+                //     id: 8,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
+                // {
+                //     id: 9,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
+                // {
+                //     id: 10,
+                //     picture: "picture url",
+                //     name: "Tina",
+                //     description: "Likes long ted talks!"
+                // },
             ], 
             blogModalIsOpen: false
         }
         this.renderReporters = this.renderReporters.bind(this)
         this.handleModalClose = this.handleModalClose.bind(this)
         this.handleNewReporterClick = this.handleNewReporterClick.bind(this)
+        this.handleDelete = this.handleDelete.bind(this)
+    }
+
+    componentDidMount(){
+        axios.get('https://desolate-bastion-18101.herokuapp.com/journalists').then(response => {
+            this.setState({
+                reporters: response.data
+            })
+            console.log(this.state.reporters)
+        })
     }
 
     renderReporters(){
@@ -86,11 +96,12 @@ export default class Reporters extends Component{
                 <div className="individual-reporter-wrapper">
                     <div className="individual-reporter">
                         <img src="https://source.unsplash.com/random" className="reporter-picture"/>
-                        <div className="reporter-name">{reporter.name}</div>
-                        <div className="reporter-description">{reporter.description}</div>
+                        <div className="reporter-name">{reporter.FName} {reporter.LName}</div>
+                        <div className="reporter-description">{reporter.Description}</div>
                     </div>
                     <div className="link-button">   
                         <Link  to={`/reporter/${reporter.id}`}>View Profile</Link>
+                        <button onClick={this.handleDelete} id={reporter.ID}>x</button>
                     </div> 
                 </div>
                 
@@ -108,6 +119,15 @@ export default class Reporters extends Component{
             blogModalIsOpen: true
         })
     }
+    handleDelete(event){
+        axios.delete(`https://desolate-bastion-18101.herokuapp.com/delJournal/${parseInt(event.target.id)}`).then(response =>{
+            window.location.reload();
+        }).catch(error =>{
+            console.log(error)
+        })
+        
+    }
+
 
     render(){
         return(
@@ -140,6 +160,7 @@ export default class Reporters extends Component{
                     <ReporterModal
                         handleModalClose={this.handleModalClose}
                         modalIsOpen={this.state.blogModalIsOpen}
+                        handleSubmit={this.handleSubmit}
                     />
                     {this.renderReporters()}
                 </div>

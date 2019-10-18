@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 
 import "./new-reporter-info.css"
+import { thisExpression } from "@babel/types";
 
 
 export default class ReporterForm extends Component {
@@ -9,28 +10,28 @@ export default class ReporterForm extends Component {
     super(props);
 
     this.state = {
-      name: "",
-      description: ""
+      FName: "",
+      LName: "",
+      Description: ""
     };
 
     this.handleChange = this.handleChange.bind(this);
-    // this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-//   buildForm() {
-//     let formData = new FormData();
-
-//     formData.append("portfolio_blog[name]", this.state.title);
-//     formData.append("portfolio_blog[description]", this.state.blog_status);
-
-//     return formData;
-//   }
 
 
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     });
+  }
+
+  handleSubmit(event){
+    event.preventDefault();
+    axios.post('https://desolate-bastion-18101.herokuapp.com/journalist', {FName:this.state.FName, LName: this.state.LName, Description: this.state.Description}).then(response => {
+      window.location.reload();
+
+    })
   }
 
   render() {
@@ -40,21 +41,28 @@ export default class ReporterForm extends Component {
           <input
             type="text"
             onChange={this.handleChange}
-            name="name"
-            placeholder="Reporter Name"
+            name="FName"
+            placeholder="First Name"
+            value={this.state.name}
+          />
+          <input
+            type="text"
+            onChange={this.handleChange}
+            name="LName"
+            placeholder="Last Name"
             value={this.state.name}
           />
 
           <input
             type="text"
             onChange={this.handleChange}
-            name="description"
+            name="Description"
             placeholder="Reporter Description"
             value={this.state.description}
           />
         </div>
 
-        <button className="btn">Save</button>
+        <button className="btn" >Save</button>
       </form>
     );
   }
